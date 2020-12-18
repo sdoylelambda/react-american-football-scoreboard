@@ -1,41 +1,29 @@
 //TODO: STEP 1 - Import the useState hook.
-import React from "react";
+import React, { useState } from 'react';
+
 import "./App.css";
 import BottomRow from "./BottomRow";
+import ScoreBoard from "./components/Scoreboard";
+import Buttons from "./components/Buttons";
+import Timer from "./components/Timer";
 
 function App() {
-  //TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
+  const [homeScore, setHome] = useState(0);
+  const [awayScore, setAway] = useState(0);
+  const [quarter, setQuarter] = useState(0);
+  const [timer, setMyTimer] = useState(1500);
+  const [pause, play] = useState(false);
+  const [toGo, setToGo] = useState(0);
+  const [down, setDown] = useState(0);
 
   return (
     <div className="container">
       <section className="scoreboard">
-        <div className="topRow">
-          <div className="home">
-            <h2 className="home__name">Lions</h2>
-
-            {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
-
-            <div className="home__score">32</div>
-          </div>
-          <div className="timer">00:03</div>
-          <div className="away">
-            <h2 className="away__name">Tigers</h2>
-            <div className="away__score">32</div>
-          </div>
-        </div>
-        <BottomRow />
+        <ScoreBoard homeScore={homeScore} awayScore={awayScore} timer={timer} setMyTimer={setMyTimer}  />
+        <BottomRow down={down} setDown={setDown} quarter={quarter} setQuarter={setQuarter} timer={timer} setMyTimer={setMyTimer} toGo={toGo} setToGo={setToGo} />
       </section>
-      <section className="buttons">
-        <div className="homeButtons">
-          {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */}
-          <button className="homeButtons__touchdown">Home Touchdown</button>
-          <button className="homeButtons__fieldGoal">Home Field Goal</button>
-        </div>
-        <div className="awayButtons">
-          <button className="awayButtons__touchdown">Away Touchdown</button>
-          <button className="awayButtons__fieldGoal">Away Field Goal</button>
-        </div>
-      </section>
+        <Buttons down={down} setDown={setDown} quarter={quarter} homeScore={homeScore} awayScore={awayScore} setHome={setHome} setAway={setAway} setQuarter={setQuarter} timer={timer} setMyTimer={setMyTimer} toGo={toGo} setToGo={setToGo}/>
+        <Timer timer={timer} setMyTimer={setMyTimer} pause={pause} play={play}/>
     </div>
   );
 }
